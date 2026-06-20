@@ -20,10 +20,11 @@ instead of flooding `inDiffNotClaimed` with every changed file.
 | `outsideScope` | 14 | 14 | unchanged — #44 does not touch scope/affected-areas |
 | coverage/uncovered (no-packet artifact) | 10 | 10 | unchanged |
 
-- **#44 removed 30 effective false positives** (the prose-flood + sha classes, entirely).
-- Independent judge on the 22 diff-keyed facts: **2 real / 20 noise → ~91% effective-FP** (raw FP 43 → ~20).
-  The 2 real are the **same** w1 `src/infra/yamlScalar.ts` layering divergence the baseline found, plus its
-  co-located test.
+- **#44 removed 22 surfaced facts** — `inDiffNotClaimed` 28→8 (the prose floods, but w1's 8 partial-manifest
+  facts survive) and `claimedNotInDiff` 2→0 (the sha class, entirely). (Not 30: that would be 28+2, which
+  wrongly counts the 8 surviving w1 facts as removed.) Effective-FP volume fell **43→~20** (≈23 fewer).
+- Independent judge on the 22 diff-keyed facts: **2 real / 20 noise → ~91% effective-FP**. The 2 real are
+  the **same** w1 `src/infra/yamlScalar.ts` layering divergence the baseline found, plus its co-located test.
 
 ## The honest read
 
