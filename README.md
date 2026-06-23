@@ -9,7 +9,7 @@ corpus-bench holds **simulated scenarios run against the real Corpus surface**. 
 
 ## Tier 1 — review-gate measurement (FROZEN v0)
 
-> **Status: FROZEN (2026-06-20).** This tier delivered its verdict — recorded as DP-5/6/7 in corpus-hq `FINDING-review-gate-measurement`: the gate is **0% effective-FP on disciplined packets, ~91% on natural ones**, so its real-world value is contingent on packet discipline, not the gate logic. It is **not under active development**; the files below stay as the reproducible record. Revive only for a committed gate-precision push, which would also complete the unmet `AC-001` classes (`C013`, `emptyEvidencePassRows`) and add scorer self-tests (the v0→v1 reopen-list).
+> **Status: FROZEN (2026-06-20).** This tier delivered its verdict — recorded as DP-5/6/7 in corpus-works `FINDING-review-gate-measurement`: the gate is **0% effective-FP on disciplined packets, ~91% on natural ones**, so its real-world value is contingent on packet discipline, not the gate logic. It is **not under active development**; the files below stay as the reproducible record. Revive only for a committed gate-precision push, which would also complete the unmet `AC-001` classes (`C013`, `emptyEvidencePassRows`) and add scorer self-tests (the v0→v1 reopen-list).
 
 A benchmark that measures the Corpus **review gate**'s mechanical **recall** and
 **effective-false-positive rate** by running seeded cases through the **public

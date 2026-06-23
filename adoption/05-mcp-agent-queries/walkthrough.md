@@ -103,7 +103,7 @@ It **fails** — even though the task exists. See Documented gaps #1.
    writes `tasks/TASK-checkout-discount.md`, so the lookup misses (exit 2). Directly checkable: in the
    workspace, `corpus show task TASK-checkout-discount` **succeeds** while `corpus show task
 checkout-discount` **fails** (`no tasks/checkout-discount.md`). So the agent, handed the exact id
-   `corpus_get_status` returned, gets "not found" for a task that exists. _(Filed as a corpus-hq finding.)_
+   `corpus_get_status` returned, gets "not found" for a task that exists. _(Filed as a corpus-works finding.)_
 2. **The server requires `corpus` (corpus-cli) on PATH** — it is a thin adapter that shells out to
    `corpus <cmd> --json`. An adopter who configured the MCP server without installing corpus-cli first gets
    no tools that work. (Observation of the `--corpus-bin` requirement + the startup line.)

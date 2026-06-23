@@ -17,7 +17,7 @@ records.** The **owner judges each surfaced fact afterward** (real-issue vs nois
   a worktree commit (so the three-dot `base...HEAD` diff reproduces the real per-file change — the
   `reproduced: YES` sanity check confirms `diffChangedFiles` count == the real commit's file count).
 - **The task intent is real.** Each spec's ACs are drawn from the change's **real task packet**
-  (`../../corpus-hq/tasks/remediation-w*.md`) `## Scope` and the commit message — _not_ invented
+  (`../../corpus-works/tasks/remediation-w*.md`) `## Scope` and the commit message — _not_ invented
   faults. The adapted task packet carries the real packet's `## Scope`, `## Do not change`,
   `## Affected areas`, and `## Run summary` (the `corpus-cli:` context prefix dropped → bare
   `src/...` paths, per the single-repo recipe).

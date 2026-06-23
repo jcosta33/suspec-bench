@@ -37,7 +37,7 @@ exposes:
 2. **`inDiffNotClaimed` prose-granularity** (w1's 8): the Run summary names the files in prose the parser
    can't match to paths.
 
-Both are the **next precision items** (recorded in `corpus-hq/findings/review-gate-measurement.md` DP-7),
+Both are the **next precision items** (recorded in `corpus-works/findings/review-gate-measurement.md` DP-7),
 beyond #44's scope. The gate's facts are sound — it surfaced the one real divergence — but on natural
 (author-written, not gate-disciplined) packets it is still `--no-verify` territory until those two classes
 are addressed.

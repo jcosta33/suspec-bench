@@ -10,7 +10,7 @@ persona × adopted-subset, spanning **minimal (1 part) → full (everything)**.
   current `corpus` binary, the built `corpus-mcp` server, and the `corpus-skills` catalog, and pasted
   verbatim. Each walkthrough's top banner says exactly what was executed.
 - **They are not field-audit evidence.** A fictional product cannot honestly yield _adoption-friction
-  findings_ — that needs a real adopter (Phase 2; the existing `corpus-hq/specs/adoption-experience/` Yap +
+  findings_ — that needs a real adopter (Phase 2; the existing `corpus-works/specs/adoption-experience/` Yap +
   Promptly audits are the real-product precedent). So "Documented gaps" here are limited to **checkable
   surface facts** (a real CLI message, a real doc/npm mismatch, by path); any UX hunch is explicitly
   labeled a _hypothesis (unverified)_, never a finding.

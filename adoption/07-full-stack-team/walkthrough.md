@@ -80,10 +80,10 @@ tasks (ADR-0076). These are free (markdown + discipline).
    `npm install -g corpus-cli`, but `npm view corpus-cli` resolves to an **unrelated** project
    (gritzko's filesystem Corpus client, 1.2.2) — not the framework CLI (1.0.0). Following the README
    installs the wrong tool. The kit's own hook contradicts the README ("not yet on npm — install from
-   source"). _(Checkable: the two `npm view` / README greps above.)_ **Filed as a corpus-hq finding.**
+   source"). _(Checkable: the two `npm view` / README greps above.)_ **Filed as a corpus-works finding.**
 2. **`corpus_get_task` can't resolve a `corpus new task` task** (the `TASK-` prefix-strip bug, walkthrough 5
    gap #1). For a team whose agents rely on the MCP for scope, the primary tool is broken on CLI-created
-   tasks. **Filed as a corpus-hq finding.**
+   tasks. **Filed as a corpus-works finding.**
 3. **A fresh `init` workspace fails the whole-workspace `corpus check` (exit 2) on unfilled `AGENTS.md`
    placeholders.** Correct as a first gate, but a team wiring CI must fill the bootloader before the gate
    passes. _(Checkable: re-run step 2 before filling AGENTS.md.)_

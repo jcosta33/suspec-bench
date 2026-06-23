@@ -20,7 +20,7 @@ separate repo each (mcp, skills) and the integration seams between them.
 ## Collected checkable gaps (across all 7)
 
 Surfaced by **executing the real surface** — these are checkable facts, not conjecture. The two marked
-**FILED** are real bugs worth tracking (a corpus-hq finding each).
+**FILED** are real bugs worth tracking (a corpus-works finding each).
 
 | Gap                                                                                                                                                                                                    | Severity                           | Where | Checkable by                                                |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------- | ----- | ----------------------------------------------------------- |
