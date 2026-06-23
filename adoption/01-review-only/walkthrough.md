@@ -17,8 +17,8 @@ the spec format, not the CLI, not skills.
 
 ### 1. Get the template
 
-Per `swarm/docs/ADOPTING.md`, adoption is "copy the kit whole." Mara copies
-[`swarm-starter-kit`](https://github.com/jcosta33/swarm-starter-kit) and opens one file —
+Per `corpus/docs/ADOPTING.md`, adoption is "copy the kit whole." Mara copies
+[`corpus-starter-kit`](https://github.com/jcosta33/corpus-starter-kit) and opens one file —
 `templates/review.md`. Its shape (verbatim section list): **Summary · Changed files · Requirement
 coverage** (`| ID | Result | Evidence | Human attention |`, results Pass/Fail/Unverified/Blocked) ·
 **Change-plan coverage** (optional) · **Human attention** · **Open decisions** (optional, ADR-0089) ·
@@ -39,23 +39,23 @@ without re-reading everything.
 ## Documented gaps (checkable surface facts only)
 
 1. **The README invites 1-part adoption, but `ADOPTING.md` only documents copy-whole.** The canon README
-   says *"Take what you want… adopt just the review packet"* — but `docs/ADOPTING.md`'s three paths are all
+   says _"Take what you want… adopt just the review packet"_ — but `docs/ADOPTING.md`'s three paths are all
    "copy the kit whole + fill the bootloader." There is no documented "just the review packet" path, so a
-   1-part adopter still copies the full ~62-file kit to use one template. *(Checkable: grep ADOPTING.md for
-   a partial-adoption path — there is none; cf. README "Take what you want.")*
+   1-part adopter still copies the full ~62-file kit to use one template. _(Checkable: grep ADOPTING.md for
+   a partial-adoption path — there is none; cf. README "Take what you want.")_
 2. **The review packet's input is the task packet.** The coverage table keys on requirement IDs the task
-   packet declares in scope, and `swarm review` reconciles the run summary's claimed files against the
+   packet declares in scope, and `corpus review` reconciles the run summary's claimed files against the
    diff — so "review packet only" in practice also leans on the task packet's scope/run-summary to be
    meaningful. (Observation from `templates/task.md` + `docs/08-reviewing-output.md`.)
 
 ## What it illustrates
 
 The smallest possible adoption: one template, plain markdown, no tooling — the review packet as an
-exception-routing layer over an existing (non-Swarm) requirements process. It earns its place alone, and it
+exception-routing layer over an existing (non-Corpus) requirements process. It earns its place alone, and it
 exposes the cleanest documented-gap: the "take what you want" promise isn't matched by a documented
 take-one path.
 
 ## To make this a real demo (Phase 2 seed)
 
 Take a real agent PR on a throwaway repo, write the review packet by hand against it, and show a reviewer
-opening only the exception files — measuring how much of the diff they did *not* have to read.
+opening only the exception files — measuring how much of the diff they did _not_ have to read.

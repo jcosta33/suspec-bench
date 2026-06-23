@@ -11,21 +11,21 @@ questions. They want the **core loop as plain markdown** — clear requirements,
 durable review record — without installing anything.
 
 **Adopts.** The core formats: **spec → task → review → finding**. Copy-whole-kit, fill `AGENTS.md`, then
-run the loop by hand. No swarm-cli, no MCP, no skills catalog.
+run the loop by hand. No corpus-cli, no MCP, no skills catalog.
 
 ## The walkthrough
 
 ### 1. Copy + bootstrap
 
 Sam copies the kit and fills the one required file — `AGENTS.md`'s Commands table (their real `test`/
-`lint`/`build`) and project facts — plus the seed `decisions/0001-adopt-swarm.md`. That's the "~15 minutes,
+`lint`/`build`) and project facts — plus the seed `decisions/0001-adopt-corpus.md`. That's the "~15 minutes,
 one copy" path `ADOPTING.md` describes.
 
 ### 2. The solo escape hatch — skip the ceremony
 
-`docs/reference/source-authority.md` says it directly: *"Working solo? You are every owner, and conflicts
+`docs/reference/source-authority.md` says it directly: _"Working solo? You are every owner, and conflicts
 you resolve in your own head — the five rules above are all you need; skip the ladder entirely until a
-second person (or a second team) makes 'who governs?' a real question."* So Sam ignores the governance
+second person (or a second team) makes 'who governs?' a real question."_ So Sam ignores the governance
 ladder and uses the five-rule MVP.
 
 ### 3. Run the loop by hand
@@ -43,13 +43,13 @@ Every artifact is markdown Sam owns outright; nothing runs but the agent.
 ## Documented gaps (checkable surface facts only)
 
 1. **The solo path is real and documented** — `source-authority.md` explicitly scopes governance away for
-   one person. *(Checkable: the quoted "Working solo?" passage.)* This is a *strength*, recorded so the
+   one person. _(Checkable: the quoted "Working solo?" passage.)_ This is a _strength_, recorded so the
    walkthrough isn't all friction.
 2. **Copy-whole still delivers the full kit to a 4-format adopter.** Sam wants four templates + the
-   bootloader; `swarm init` / the kit copy also brings `advanced/`, `examples/`, `hooks/`, and the skills
+   bootloader; `corpus init` / the kit copy also brings `advanced/`, `examples/`, `hooks/`, and the skills
    guides. The `examples/feature-from-ticket/` is meant to be read then deleted (`ADOPTING.md` step 4), but
-   nothing prunes the rest. *(Observation of the kit tree.)*
-3. *Hypothesis (unverified):* a solo dev may find the markdown-only loop low-friction precisely because
+   nothing prunes the rest. _(Observation of the kit tree.)_
+3. _Hypothesis (unverified):_ a solo dev may find the markdown-only loop low-friction precisely because
    there is nothing to install — but that's a UX guess, not a measured finding.
 
 ## What it illustrates

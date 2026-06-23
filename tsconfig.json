@@ -1,5 +1,5 @@
 {
-  "//": "Editor/type-check config only — swarm-bench ships runnable .mjs (Node 22 native ESM), no build step. `npx tsc --noEmit` type-checks the JS via checkJs.",
+  "//": "Editor/type-check config only — corpus-bench ships runnable .mjs (Node 22 native ESM), no build step. `npx tsc --noEmit` type-checks the JS via checkJs.",
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",

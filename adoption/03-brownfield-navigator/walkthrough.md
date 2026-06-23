@@ -1,6 +1,6 @@
 # Adoption walkthrough 3 — brownfield refactor, inventory + change plan
 
-> **A verified illustration**, not a field audit. The product/persona are fictional; the `swarm check`
+> **A verified illustration**, not a field audit. The product/persona are fictional; the `corpus check`
 > output below was **really executed** against a filled change plan in a throwaway workspace and pasted
 > verbatim. "Documented gaps" are checkable surface facts.
 
@@ -8,7 +8,7 @@
 
 **Persona.** Priya, an engineer on an existing ~80k-LOC service. The next job is a structural refactor —
 extract the pricing math out of the checkout controller — done by an agent, with **no change to observable
-behavior**. She needs the agent boxed in by *preservation guarantees*, not a loose "refactor this."
+behavior**. She needs the agent boxed in by _preservation guarantees_, not a loose "refactor this."
 
 **Adopts.** The core loop **+ the advanced brownfield tier**: an **inventory** (map the code first) and a
 **change plan** (enumerate what must survive, in waves). The `large-pr-review` shape from
@@ -19,7 +19,7 @@ behavior**. She needs the agent boxed in by *preservation guarantees*, not a loo
 ### 1. Inventory before touching anything
 
 Priya writes an `inventory/` doc from `templates/inventory.md` — current modules, interfaces, behavior,
-tests, unknowns. It *observes, never judges* (the auditor discipline). This anchors the change plan to what
+tests, unknowns. It _observes, never judges_ (the auditor discipline). This anchors the change plan to what
 the code actually does today.
 
 ### 2. The change plan — preservation as a table
@@ -29,9 +29,10 @@ table binding each behavior to the spec AC it must keep and the command that pro
 
 ```markdown
 ## Behavioral preservation guarantees
-| ID | Behavior | Verify with |
-|---|---|---|
-| SPEC-checkout-discount#AC-001 | a valid code still reduces the total by its percentage | npm test -- discount.applies |
+
+| ID                            | Behavior                                                 | Verify with                  |
+| ----------------------------- | -------------------------------------------------------- | ---------------------------- |
+| SPEC-checkout-discount#AC-001 | a valid code still reduces the total by its percentage   | npm test -- discount.applies |
 | SPEC-checkout-discount#AC-002 | an invalid/expired code still leaves the total unchanged | npm test -- discount.rejects |
 ```
 
@@ -43,7 +44,7 @@ plus `## Transformation waves` (each wave leaves the suite green), `## Cutover c
 Priya runs the check on the change plan:
 
 ```
-$ swarm check change-plans/extract-pricing.md
+$ corpus check change-plans/extract-pricing.md
 change-plans/extract-pricing.md  ✓ clean  0 errors, 0 warnings
 EXIT: 0
 ```
@@ -55,23 +56,23 @@ waves, would not pass clean.
 ### 4. The two-tier review
 
 When the agent's ~40-file PR lands, the review packet carries **two** coverage tables — requirement
-coverage *and* change-plan coverage (each preservation guarantee, its Verify result) — so the reviewer
+coverage _and_ change-plan coverage (each preservation guarantee, its Verify result) — so the reviewer
 confirms both "the feature is right" and "nothing else moved." This is the `large-pr-review.md` punchline:
 read the table rows + exceptions, open a handful of files, not 40.
 
 ## Documented gaps (checkable surface facts only)
 
-1. **`swarm check` does validate the change-plan contract** (C010 preserves-refs, C011 waves) and passed
-   the filled plan clean. *(Checkable: re-run step 3; a plan with an unresolvable `preserves:` ref or no
-   `## Transformation waves` would not be clean.)* Recorded as a *capability*, not a defect.
+1. **`corpus check` does validate the change-plan contract** (C010 preserves-refs, C011 waves) and passed
+   the filled plan clean. _(Checkable: re-run step 3; a plan with an unresolvable `preserves:` ref or no
+   `## Transformation waves` would not be clean.)_ Recorded as a _capability_, not a defect.
 2. **Inventory + change plan are advanced-tier, discovered only if you read `docs/05`.** They are not in
    the core three guides; an adopter who never opens `docs/05-brownfield-and-change-plans.md` won't know
-   the brownfield path exists. *(Observation of the core-vs-advanced tiering, ADR-0064.)*
+   the brownfield path exists. _(Observation of the core-vs-advanced tiering, ADR-0064.)_
 
 ## What it illustrates
 
-The brownfield adoption shape: the agent is boxed by *preservation guarantees the CLI can mechanically
-check*, and the review proves both the change and the non-change — the case where Swarm's structure earns
+The brownfield adoption shape: the agent is boxed by _preservation guarantees the CLI can mechanically
+check_, and the review proves both the change and the non-change — the case where Corpus's structure earns
 the most over an ad-hoc "refactor this" prompt.
 
 ## To make this a real demo (Phase 2 seed)

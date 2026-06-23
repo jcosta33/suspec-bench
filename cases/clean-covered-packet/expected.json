@@ -1,6 +1,6 @@
 {
   "category": "clean",
-  "description": "A correct run with two ACs: both changed files (src/queue/retry.ts, src/queue/dlq.ts) are in scope and claimed, no protected file touched, and a review packet (task: queue-retry) covers AC-001 and AC-002 with Pass rows + structured verify blocks naming each AC's command. The gate reports NO fact. Any surfaced fact here is an effective false positive.",
+  "description": "A correct run with two ACs: both changed files (src/queue/retry.ts, src/queue/dlq.ts) are in scope and claimed, no protected file touched, and a review packet (task: TASK-queue-retry) covers AC-001 and AC-002 with Pass rows + structured verify blocks naming each AC's command. The gate reports NO fact. Any surfaced fact here is an effective false positive.",
   "expectedFacts": [],
   "targetFacts": []
 }

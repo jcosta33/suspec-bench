@@ -1,6 +1,6 @@
 {
   "category": "clean",
-  "description": "A correct run: src/log/level.ts changed (in scope, claimed), no protected file touched, and a review packet (task: logger-level) covers AC-001 with a Pass row + a structured verify block naming `npm test -- logger`. The gate reports NO fact. Any surfaced fact here is an effective false positive.",
+  "description": "A correct run: src/log/level.ts changed (in scope, claimed), no protected file touched, and a review packet (task: TASK-logger-level) covers AC-001 with a Pass row + a structured verify block naming `npm test -- logger`. The gate reports NO fact. Any surfaced fact here is an effective false positive.",
   "expectedFacts": [],
   "targetFacts": []
 }

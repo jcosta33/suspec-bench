@@ -2,7 +2,7 @@
 
 > **A verified illustration**, not a field audit. The persona is fictional; the catalog, both install
 > paths, and the installed `SKILL.md` below were **really executed** against the
-> [swarm-skills](https://github.com/jcosta33/swarm-skills) repo / the `npx skills` tool, output pasted
+> [corpus-skills](https://github.com/jcosta33/corpus-skills) repo / the `npx skills` tool, output pasted
 > verbatim (TUI spinner control characters elided). "Documented gaps" are checkable surface facts.
 
 ## Premise
@@ -11,14 +11,14 @@
 work: the Skeptic stance for reviews, the `write-fix` guide for bug work — installed per task, not
 always-on.
 
-**Adopts.** The starter kit **+ swarm-skills** (the catalog of conditioning stances + change-shape code
-guides). Not swarm-cli, not the MCP server.
+**Adopts.** The starter kit **+ corpus-skills** (the catalog of conditioning stances + change-shape code
+guides). Not corpus-cli, not the MCP server.
 
 ## The walkthrough
 
 ### 1. The catalog — 18 standalone skills
 
-`swarm-skills/skills/` ships personas (stances) and change-shape guides, each a self-contained `SKILL.md`:
+`corpus-skills/skills/` ships personas (stances) and change-shape guides, each a self-contained `SKILL.md`:
 
 ```
 empirical-proof      persona-architect   persona-auditor      persona-challenger
@@ -31,9 +31,9 @@ write-rewrite        write-testing
 ### 2. Install path A — the `npx skills` tool
 
 ```
-$ npx skills add jcosta33/swarm-skills --list
+$ npx skills add jcosta33/corpus-skills --list
 ●  claude-code … Agent detected — installing non-interactively
-◇  Source: https://github.com/jcosta33/swarm-skills.git
+◇  Source: https://github.com/jcosta33/corpus-skills.git
 ◇  Repository cloned
 ◇  Found 18 skills
 ◇  Available Skills
@@ -54,8 +54,8 @@ The tool detects the agent, clones the catalog, and lists all 18 with their full
 The README's no-CLI path is a plain copy:
 
 ```
-$ cp -R swarm-skills/skills/persona-skeptic .agents/skills/
-$ cp -R swarm-skills/skills/write-fix       .agents/skills/
+$ cp -R corpus-skills/skills/persona-skeptic .agents/skills/
+$ cp -R corpus-skills/skills/write-fix       .agents/skills/
 $ ls .agents/skills/
 adversarial-review/  implement-task/  persona-skeptic/  review-output/  save-findings/
 spec-check/  split-work/  write-audit/  write-bug-report/  write-change-plan/  write-fix/  …
@@ -76,14 +76,14 @@ description: >-
 
 ## Documented gaps (checkable surface facts only)
 
-1. **The personas are not in the kit core — they install per task.** A fresh `swarm init` `.agents/skills/`
+1. **The personas are not in the kit core — they install per task.** A fresh `corpus init` `.agents/skills/`
    ships the core/workspace guides (`implement-task`, `review-output`, `write-audit`, …) but **no
    `persona-*`**; the stances come from the catalog (matches ADR-0064's core-vs-advanced tiering). So
-   "install per task" is a real extra step, by design. *(Checkable: `ls` a fresh `init` skills dir — no
-   personas — vs after the copy.)*
+   "install per task" is a real extra step, by design. _(Checkable: `ls` a fresh `init` skills dir — no
+   personas — vs after the copy.)_
 2. **The `npx skills add` output carries TUI spinner control characters even in agent-detected
    non-interactive mode** (`◒ Cloning repository` redraw sequences). Cosmetic, but it clutters an agent's
-   captured transcript. *(Checkable: re-run `npx skills add … --list` and inspect the raw bytes.)*
+   captured transcript. _(Checkable: re-run `npx skills add … --list` and inspect the raw bytes.)_
 
 ## What it illustrates
 
