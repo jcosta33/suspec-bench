@@ -1,23 +1,23 @@
-// Materialize one WILD case — a REAL corpus-cli commit — as a throwaway git workspace and run it
-// through the PUBLIC `corpus review --json` contract. Like the synthetic materializer, this NEVER
-// imports corpus-cli's Core: it shells out to the `corpus` binary AND reads the real commit's file
-// blobs out of the corpus-cli git history with `git -C <repo> show`. It does NOT seed faults — the
+// Materialize one WILD case — a REAL suspec-cli commit — as a throwaway git workspace and run it
+// through the PUBLIC `suspec review --json` contract. Like the synthetic materializer, this NEVER
+// imports suspec-cli's Core: it shells out to the `suspec` binary AND reads the real commit's file
+// blobs out of the suspec-cli git history with `git -C <repo> show`. It does NOT seed faults — the
 // change set is the real diff of a real commit, and no expected facts are declared (the wild tier is
 // descriptive; the owner judges each surfaced fact afterward).
 //
 // The recipe (the faithful-materialization recipe from SPEC-review-gate-benchmark AC-003):
 //   1. mkdtemp a throwaway dir, `git init`, set a committer identity.
-//   2. `corpus init` scaffolds the workspace.
+//   2. `suspec init` scaffolds the workspace.
 //   3. Write specs/<slug>/spec.md (status: ready) + tasks/<taskStem>.md — the case's spec + the
 //      single-repo-adapted REAL task packet (bare src/... paths; the real ## Scope / ## Do not change
 //      / ## Affected areas / ## Run summary).
 //   4. For every file the real commit CHANGED, write its PARENT version (`git show <sha>^:<path>`,
 //      empty if the file was ADDED) into the base; git add -A && git commit. BASE = current branch.
-//   5. `corpus worktree create <slug> --task <taskStem>` → .worktrees/<slug>~<taskStem>. Into the
+//   5. `suspec worktree create <slug> --task <taskStem>` → .worktrees/<slug>~<taskStem>. Into the
 //      worktree write each changed file's NEW version (`git show <sha>:<path>`, delete if REMOVED);
 //      git add -A && git commit there. This reproduces the REAL diff of the commit against base —
 //      committed, so the three-dot diff lists individual files (the untracked-dir-collapse gotcha).
-//   6. From the workspace root: `corpus review <taskStem> --base <BASE> --json` → the ReviewReport.
+//   6. From the workspace root: `suspec review <taskStem> --base <BASE> --json` → the ReviewReport.
 //
 // Per case we record the RAW facts the gate surfaced (every coverage/verifyBinding/scopeDivergence/
 // selfReport/doNotChangeTouched/emptyEvidencePassRow/packetStructural entry with its id/kind),
@@ -163,7 +163,7 @@ export function rawFactReport(report) {
 }
 
 /**
- * Materialize a wild case and run it through `corpus review --json`. Returns:
+ * Materialize a wild case and run it through `suspec review --json`. Returns:
  *   { report, raw, level, hasReviewPacket, diffChangedFiles, diffChangedCount, commitFileCount,
  *     reproduced, reviewExit, workDir, base }
  * where `raw` is { facts, flat } (rawFactReport), `commitFileCount` is the real commit's changed-file
@@ -172,7 +172,7 @@ export function rawFactReport(report) {
  */
 export function materializeAndReviewWild(
   wildCase,
-  corpusBin,
+  suspecBin,
   benchRoot,
   { keep = false } = {},
 ) {
@@ -180,15 +180,15 @@ export function materializeAndReviewWild(
   const sha = wildCase.sourceCommit.sha;
   const changed = wildCase.changedFiles ?? [];
 
-  const work = mkdtempSync(join(tmpdir(), "corpus-bench-wild-"));
+  const work = mkdtempSync(join(tmpdir(), "suspec-bench-wild-"));
   try {
     // 1. init + committer identity
     git(work, "init", "-q");
-    git(work, "config", "user.email", "bench@corpus-bench.local");
-    git(work, "config", "user.name", "corpus-bench");
+    git(work, "config", "user.email", "bench@suspec-bench.local");
+    git(work, "config", "user.name", "suspec-bench");
 
     // 2. scaffold the workspace
-    run("node", [corpusBin, "init"], { cwd: work });
+    run("node", [suspecBin, "init"], { cwd: work });
 
     // 3. spec + adapted task packet
     writeRelative(work, join("specs", wildCase.slug, "spec.md"), wildCase.spec);
@@ -212,7 +212,7 @@ export function materializeAndReviewWild(
     run(
       "node",
       [
-        corpusBin,
+        suspecBin,
         "worktree",
         "create",
         wildCase.slug,
@@ -243,7 +243,7 @@ export function materializeAndReviewWild(
     // 6. the public review contract. exit 0 (clean) or 1 (warnings) are both valid; 2 is an error.
     const res = run(
       "node",
-      [corpusBin, "review", wildCase.taskStem, "--base", base, "--json"],
+      [suspecBin, "review", wildCase.taskStem, "--base", base, "--json"],
       {
         cwd: work,
         allowExit: [0, 1],

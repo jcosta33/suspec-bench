@@ -1,22 +1,22 @@
 {
-  "name": "corpus-bench",
+  "name": "suspec-bench",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Measures the Corpus review gate's recall + effective-false-positive rate through the public `corpus review --json` contract. Never imports corpus-cli's Core (the ADR-0085 posture).",
+  "description": "Measures the Suspec review gate's recall + effective-false-positive rate through the public `suspec review --json` contract. Never imports suspec-cli's Core (the ADR-0085 posture).",
   "engines": {
     "node": ">=22"
   },
   "bin": {
-    "corpus-bench": "src/runner.mjs"
+    "suspec-bench": "src/runner.mjs"
   },
   "scripts": {
     "bench": "node src/runner.mjs",
     "bench:synthetic": "node src/runner.mjs",
     "bench:wild": "node src/wild-runner.mjs"
   },
-  "corpusBench": {
-    "corpusBin": "../corpus-cli/bin/corpus.js",
+  "suspecBench": {
+    "suspecBin": "../suspec-cli/bin/suspec.js",
     "effectiveFpCeiling": 0.1
   }
 }

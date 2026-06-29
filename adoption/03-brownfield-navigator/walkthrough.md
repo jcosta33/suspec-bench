@@ -1,6 +1,6 @@
 # Adoption walkthrough 3 — brownfield refactor, inventory + change plan
 
-> **A verified illustration**, not a field audit. The product/persona are fictional; the `corpus check`
+> **A verified illustration**, not a field audit. The product/persona are fictional; the `suspec check`
 > output below was **really executed** against a filled change plan in a throwaway workspace and pasted
 > verbatim. "Documented gaps" are checkable surface facts.
 
@@ -44,7 +44,7 @@ plus `## Transformation waves` (each wave leaves the suite green), `## Cutover c
 Priya runs the check on the change plan:
 
 ```
-$ corpus check change-plans/extract-pricing.md
+$ suspec check change-plans/extract-pricing.md
 change-plans/extract-pricing.md  ✓ clean  0 errors, 0 warnings
 EXIT: 0
 ```
@@ -62,7 +62,7 @@ read the table rows + exceptions, open a handful of files, not 40.
 
 ## Documented gaps (checkable surface facts only)
 
-1. **`corpus check` does validate the change-plan contract** (C010 preserves-refs, C011 waves) and passed
+1. **`suspec check` does validate the change-plan contract** (C010 preserves-refs, C011 waves) and passed
    the filled plan clean. _(Checkable: re-run step 3; a plan with an unresolvable `preserves:` ref or no
    `## Transformation waves` would not be clean.)_ Recorded as a _capability_, not a defect.
 2. **Inventory + change plan are advanced-tier, discovered only if you read `docs/05`.** They are not in
@@ -72,7 +72,7 @@ read the table rows + exceptions, open a handful of files, not 40.
 ## What it illustrates
 
 The brownfield adoption shape: the agent is boxed by _preservation guarantees the CLI can mechanically
-check_, and the review proves both the change and the non-change — the case where Corpus's structure earns
+check_, and the review proves both the change and the non-change — the case where Suspec's structure earns
 the most over an ad-hoc "refactor this" prompt.
 
 ## To make this a real demo (Phase 2 seed)

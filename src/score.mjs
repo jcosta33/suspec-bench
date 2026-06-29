@@ -92,10 +92,10 @@ function pct(x) {
 export function renderReport(results, scored) {
   const lines = [];
   lines.push(
-    "================ corpus-bench v0 — review-gate recall + effective-FP ================",
+    "================ suspec-bench v0 — review-gate recall + effective-FP ================",
   );
   lines.push(
-    "Subject : corpus review --json  (public contract; corpus-cli Core never imported — ADR-0085)",
+    "Subject : suspec review --json  (public contract; suspec-cli Core never imported — ADR-0085)",
   );
   lines.push(
     "Target  : recall per fact class + effective-FP ≤ " +

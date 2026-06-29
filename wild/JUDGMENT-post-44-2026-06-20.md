@@ -1,7 +1,7 @@
 # Wild-set judgment — after the #44 run-summary parser fix (2026-06-20)
 
-This re-runs the four wild cases (same real corpus-cli commits + real packets) against the **#44-patched**
-corpus-cli, and records an **independent, non-author** judge's classification of the result. It is the
+This re-runs the four wild cases (same real suspec-cli commits + real packets) against the **#44-patched**
+suspec-cli, and records an **independent, non-author** judge's classification of the result. It is the
 post-fix counterpart to [JUDGMENT-2026-06-20.md](./JUDGMENT-2026-06-20.md) (the pre-fix baseline).
 
 ## What #44 changed
@@ -37,13 +37,13 @@ exposes:
 2. **`inDiffNotClaimed` prose-granularity** (w1's 8): the Run summary names the files in prose the parser
    can't match to paths.
 
-Both are the **next precision items** (recorded in `corpus-works/findings/review-gate-measurement.md` DP-7),
+Both are the **next precision items** (recorded in `suspec-works/findings/review-gate-measurement.md` DP-7),
 beyond #44's scope. The gate's facts are sound — it surfaced the one real divergence — but on natural
 (author-written, not gate-disciplined) packets it is still `--no-verify` territory until those two classes
 are addressed.
 
 **Independence:** DP-7 improves the _judging_ bias (a non-author agent, who even classified slightly
-differently). The _changes and packets_ remain corpus-family. A fully-independent wild set is structurally
-hard — the gate reconciles against a Corpus task packet, which external projects don't produce, so an
+differently). The _changes and packets_ remain suspec-family. A fully-independent wild set is structurally
+hard — the gate reconciles against a Suspec task packet, which external projects don't produce, so an
 external change needs a synthesized packet (reintroducing author bias). The fully-unbiased version awaits a
-real external adopter who already runs Corpus.
+real external adopter who already runs Suspec.

@@ -11,14 +11,14 @@ questions. They want the **core loop as plain markdown** — clear requirements,
 durable review record — without installing anything.
 
 **Adopts.** The core formats: **spec → task → review → finding**. Copy-whole-kit, fill `AGENTS.md`, then
-run the loop by hand. No corpus-cli, no MCP, no skills catalog.
+run the loop by hand. No suspec-cli, no MCP, no skills catalog.
 
 ## The walkthrough
 
 ### 1. Copy + bootstrap
 
 Sam copies the kit and fills the one required file — `AGENTS.md`'s Commands table (their real `test`/
-`lint`/`build`) and project facts — plus the seed `decisions/0001-adopt-corpus.md`. That's the "~15 minutes,
+`lint`/`build`) and project facts — plus the seed `decisions/0001-adopt-suspec.md`. That's the "~15 minutes,
 one copy" path `ADOPTING.md` describes.
 
 ### 2. The solo escape hatch — skip the ceremony
@@ -46,7 +46,7 @@ Every artifact is markdown Sam owns outright; nothing runs but the agent.
    one person. _(Checkable: the quoted "Working solo?" passage.)_ This is a _strength_, recorded so the
    walkthrough isn't all friction.
 2. **Copy-whole still delivers the full kit to a 4-format adopter.** Sam wants four templates + the
-   bootloader; `corpus init` / the kit copy also brings `advanced/`, `examples/`, `hooks/`, and the skills
+   bootloader; `suspec init` / the kit copy also brings `advanced/`, `examples/`, `hooks/`, and the skills
    guides. The `examples/feature-from-ticket/` is meant to be read then deleted (`ADOPTING.md` step 4), but
    nothing prunes the rest. _(Observation of the kit tree.)_
 3. _Hypothesis (unverified):_ a solo dev may find the markdown-only loop low-friction precisely because

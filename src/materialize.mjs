@@ -1,19 +1,19 @@
 // Materialize one seeded case as a throwaway git workspace and run it through the PUBLIC
-// `corpus review --json` contract. This module NEVER imports corpus-cli's Core — it only shells out to
-// the `corpus` binary (the ADR-0085 posture: consume the published `--json` surface, not the library).
+// `suspec review --json` contract. This module NEVER imports suspec-cli's Core — it only shells out to
+// the `suspec` binary (the ADR-0085 posture: consume the published `--json` surface, not the library).
 //
 // The recipe (validated against the real binary):
 //   1. mkdtemp a throwaway dir, `git init`, set a committer identity.
-//   2. `corpus init` scaffolds the workspace (specs/ tasks/ reviews/ ...).
+//   2. `suspec init` scaffolds the workspace (specs/ tasks/ reviews/ ...).
 //   3. Write specs/<slug>/spec.md, tasks/<taskStem>.md, optional reviews/<taskStem>.md, and the
 //      case's baseFiles.
 //   4. git add -A && git commit  (the base commit; BASE = the current branch, normally `main`).
-//   5. `corpus worktree create <slug> --task <taskStem>` → .worktrees/<slug>~<taskStem>.
+//   5. `suspec worktree create <slug> --task <taskStem>` → .worktrees/<slug>~<taskStem>.
 //   6. Apply the change set IN the worktree and COMMIT it there. (Gotcha: an UNCOMMITTED new file in a
 //      new directory collapses to the parent dir name in `git diff --name-only` — git reports the
 //      untracked directory, not the files — which breaks per-file fact matching. Committing makes the
 //      three-dot diff list individual files.)
-//   7. From the workspace root: `corpus review <taskStem> --base <BASE> --json` → the ReviewReport JSON.
+//   7. From the workspace root: `suspec review <taskStem> --base <BASE> --json` → the ReviewReport JSON.
 
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
@@ -92,18 +92,18 @@ export function normalizeFacts(report) {
  */
 export function materializeAndReview(
   testCase,
-  corpusBin,
+  suspecBin,
   { keep = false } = {},
 ) {
-  const work = mkdtempSync(join(tmpdir(), "corpus-bench-"));
+  const work = mkdtempSync(join(tmpdir(), "suspec-bench-"));
   try {
     git(work, "init", "-q");
     // committer identity (the recipe requires it for the base + change commits)
-    git(work, "config", "user.email", "bench@corpus-bench.local");
-    git(work, "config", "user.name", "corpus-bench");
+    git(work, "config", "user.email", "bench@suspec-bench.local");
+    git(work, "config", "user.name", "suspec-bench");
 
     // 2. scaffold the workspace
-    run("node", [corpusBin, "init"], { cwd: work });
+    run("node", [suspecBin, "init"], { cwd: work });
 
     // 3. write spec, task, optional review packet, base files
     writeRelative(work, join("specs", testCase.slug, "spec.md"), testCase.spec);
@@ -132,7 +132,7 @@ export function materializeAndReview(
     run(
       "node",
       [
-        corpusBin,
+        suspecBin,
         "worktree",
         "create",
         testCase.slug,
@@ -157,7 +157,7 @@ export function materializeAndReview(
     // 7. run the public review contract. exit 0 (clean) or 1 (warnings) are both valid; 2 is an error.
     const res = run(
       "node",
-      [corpusBin, "review", testCase.taskStem, "--base", base, "--json"],
+      [suspecBin, "review", testCase.taskStem, "--base", base, "--json"],
       {
         cwd: work,
         allowExit: [0, 1],

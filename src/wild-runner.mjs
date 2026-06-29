@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // The WILD runner (SPEC-review-gate-benchmark AC-003). Loads each wild/<case>/case.json — a REAL
-// corpus-cli commit paired with a single-repo-adapted real task packet — materializes it as a
-// throwaway git workspace, runs it through the PUBLIC `corpus review --json` contract (never importing
-// corpus-cli's Core, the ADR-0085 posture), and emits a per-case RAW fact report.
+// suspec-cli commit paired with a single-repo-adapted real task packet — materializes it as a
+// throwaway git workspace, runs it through the PUBLIC `suspec review --json` contract (never importing
+// suspec-cli's Core, the ADR-0085 posture), and emits a per-case RAW fact report.
 //
 // The wild tier is DESCRIPTIVE: there are NO declared expected facts and NO pass/fail. Wild changes
 // have no seeded ground truth, so the runner records what the gate surfaced (verbatim, with each
@@ -24,11 +24,14 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 const WILD_DIR = join(ROOT, "wild");
 
-function resolveCorpusBin() {
-  if (process.env.CORPUS_BIN) return resolve(process.env.CORPUS_BIN);
+function resolveSuspecBin() {
+  if (process.env.SUSPEC_BIN) return resolve(process.env.SUSPEC_BIN);
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
-  const rel = pkg.corpusBench?.corpusBin ?? "../corpus-cli/bin/corpus.js";
-  return resolve(ROOT, rel);
+  const rel = pkg.suspecBench?.suspecBin ?? "../suspec-cli/bin/suspec.js";
+  const configured = resolve(ROOT, rel);
+  if (existsSync(configured)) return configured;
+  const localCheckout = resolve(ROOT, "../corpus-cli/bin/suspec.js");
+  return existsSync(localCheckout) ? localCheckout : configured;
 }
 
 /** Load every wild/<case>/case.json. Asserts the materialization fields are present. */
@@ -94,7 +97,7 @@ function main() {
   const asJson = args.includes("--json");
   const keep = args.includes("--keep");
 
-  const corpusBin = resolveCorpusBin();
+  const suspecBin = resolveSuspecBin();
 
   let cases;
   try {
@@ -109,7 +112,7 @@ function main() {
   for (const c of cases) {
     let r;
     try {
-      r = materializeAndReviewWild(c, corpusBin, ROOT, { keep });
+      r = materializeAndReviewWild(c, suspecBin, ROOT, { keep });
     } catch (e) {
       failures.push({ name: c.name, source: c.sourceCommit, error: e.message });
       records.push({ name: c.name, source: c.sourceCommit, error: e.message });
@@ -139,13 +142,13 @@ function main() {
 
   const out = [];
   out.push(
-    "================ corpus-bench — WILD tier (descriptive; no pass/fail) ================",
+    "================ suspec-bench — WILD tier (descriptive; no pass/fail) ================",
   );
   out.push(
-    "Subject : corpus review --json  (public contract; corpus-cli Core never imported — ADR-0085)",
+    "Subject : suspec review --json  (public contract; suspec-cli Core never imported — ADR-0085)",
   );
   out.push(
-    "Changes : REAL corpus-family commits (self-measurement bias — recorded per case; owner judges)",
+    "Changes : REAL suspec-family commits (self-measurement bias — recorded per case; owner judges)",
   );
   out.push(
     "Facts   : RAW — every surfaced fact, with its id/kind, for human judgment (real-issue vs noise)",

@@ -17,8 +17,8 @@ the spec format, not the CLI, not skills.
 
 ### 1. Get the template
 
-Per `corpus/docs/ADOPTING.md`, adoption is "copy the kit whole." Mara copies
-[`corpus-starter-kit`](https://github.com/jcosta33/corpus-starter-kit) and opens one file —
+Per `suspec/docs/ADOPTING.md`, adoption is "copy the kit whole." Mara copies
+[`suspec-starter-kit`](https://github.com/jcosta33/suspec-starter-kit) and opens one file —
 `templates/review.md`. Its shape (verbatim section list): **Summary · Changed files · Requirement
 coverage** (`| ID | Result | Evidence | Human attention |`, results Pass/Fail/Unverified/Blocked) ·
 **Change-plan coverage** (optional) · **Human attention** · **Open decisions** (optional, ADR-0089) ·
@@ -44,14 +44,14 @@ without re-reading everything.
    1-part adopter still copies the full ~62-file kit to use one template. _(Checkable: grep ADOPTING.md for
    a partial-adoption path — there is none; cf. README "Take what you want.")_
 2. **The review packet's input is the task packet.** The coverage table keys on requirement IDs the task
-   packet declares in scope, and `corpus review` reconciles the run summary's claimed files against the
+   packet declares in scope, and `suspec review` reconciles the run summary's claimed files against the
    diff — so "review packet only" in practice also leans on the task packet's scope/run-summary to be
    meaningful. (Observation from `templates/task.md` + `docs/08-reviewing-output.md`.)
 
 ## What it illustrates
 
 The smallest possible adoption: one template, plain markdown, no tooling — the review packet as an
-exception-routing layer over an existing (non-Corpus) requirements process. It earns its place alone, and it
+exception-routing layer over an existing (non-Suspec) requirements process. It earns its place alone, and it
 exposes the cleanest documented-gap: the "take what you want" promise isn't matched by a documented
 take-one path.
 

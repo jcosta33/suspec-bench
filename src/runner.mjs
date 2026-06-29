@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // The synthetic runner (AC-002). Loads the seeded corpus, materializes each case as a throwaway git
-// workspace, runs it through the PUBLIC `corpus review --json` contract, and records per case the
+// workspace, runs it through the PUBLIC `suspec review --json` contract, and records per case the
 // surfaced facts vs the declared expected facts (hit / miss / extra). Exits non-zero on any miss
 // (AC-002) or when the effective-FP rate exceeds the ceiling (AC-004).
 //
@@ -10,7 +10,7 @@
 //                                     grounding expected.json against the gate (the gate is the oracle)
 //   node src/runner.mjs --json        emit the machine-readable scored result as JSON
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -21,17 +21,20 @@ import { score, renderReport, DEFAULT_FP_CEILING } from "./score.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 
-function resolveCorpusBin() {
-  if (process.env.CORPUS_BIN) return resolve(process.env.CORPUS_BIN);
+function resolveSuspecBin() {
+  if (process.env.SUSPEC_BIN) return resolve(process.env.SUSPEC_BIN);
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
-  const rel = pkg.corpusBench?.corpusBin ?? "../corpus-cli/bin/corpus.js";
-  return resolve(ROOT, rel);
+  const rel = pkg.suspecBench?.suspecBin ?? "../suspec-cli/bin/suspec.js";
+  const configured = resolve(ROOT, rel);
+  if (existsSync(configured)) return configured;
+  const localCheckout = resolve(ROOT, "../corpus-cli/bin/suspec.js");
+  return existsSync(localCheckout) ? localCheckout : configured;
 }
 
 function resolveCeiling() {
   if (process.env.FP_CEILING) return Number(process.env.FP_CEILING);
   const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
-  return pkg.corpusBench?.effectiveFpCeiling ?? DEFAULT_FP_CEILING;
+  return pkg.suspecBench?.effectiveFpCeiling ?? DEFAULT_FP_CEILING;
 }
 
 function diff(expected, surfaced) {
@@ -50,7 +53,7 @@ function main() {
   const asJson = args.includes("--json");
   const keep = args.includes("--keep");
 
-  const corpusBin = resolveCorpusBin();
+  const suspecBin = resolveSuspecBin();
   const fpCeiling = resolveCeiling();
 
   let cases;
@@ -63,7 +66,7 @@ function main() {
 
   if (observe) {
     console.error(
-      `# observe mode — materializing ${cases.length} cases via ${corpusBin}\n`,
+      `# observe mode — materializing ${cases.length} cases via ${suspecBin}\n`,
     );
   }
 
@@ -71,7 +74,7 @@ function main() {
   for (const c of cases) {
     let mr;
     try {
-      mr = materializeAndReview(c, corpusBin, { keep });
+      mr = materializeAndReview(c, suspecBin, { keep });
     } catch (e) {
       console.error(`case '${c.name}' failed to materialize: ${e.message}`);
       process.exit(2);
