@@ -30,8 +30,25 @@ function resolveSuspecBin() {
   const rel = pkg.suspecBench?.suspecBin ?? "../suspec-cli/bin/suspec.js";
   const configured = resolve(ROOT, rel);
   if (existsSync(configured)) return configured;
-  const localCheckout = resolve(ROOT, "../corpus-cli/bin/suspec.js");
-  return existsSync(localCheckout) ? localCheckout : configured;
+  const sibling = findSiblingSuspecBin();
+  return sibling ?? configured;
+}
+
+function findSiblingSuspecBin() {
+  const parent = resolve(ROOT, "..");
+  for (const name of readdirSync(parent)) {
+    const candidateRoot = join(parent, name);
+    const candidateBin = join(candidateRoot, "bin", "suspec.js");
+    const candidatePackage = join(candidateRoot, "package.json");
+    if (!existsSync(candidateBin) || !existsSync(candidatePackage)) continue;
+    try {
+      const pkg = JSON.parse(readFileSync(candidatePackage, "utf8"));
+      if (pkg.name === "suspec-cli") return candidateBin;
+    } catch {
+      // Ignore non-package sibling directories.
+    }
+  }
+  return null;
 }
 
 /** Load every wild/<case>/case.json. Asserts the materialization fields are present. */
@@ -103,7 +120,7 @@ function main() {
   try {
     cases = loadWildCases();
   } catch (e) {
-    console.error(`wild corpus failed to load (AC-003): ${e.message}`);
+    console.error(`wild case set failed to load (AC-003): ${e.message}`);
     process.exit(2);
   }
 

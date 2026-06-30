@@ -49,7 +49,7 @@ function writeRelative(root, relPath, content) {
 
 /**
  * Normalize a raw ReviewReport JSON object into a flat, sorted set of fact strings of the form
- * `<class>:<key>`. This is the canonical fact vocabulary the corpus declares against. A fact is
+ * `<class>:<key>`. This is the canonical fact vocabulary the fixture set declares against. A fact is
  * surfaced by the gate iff its string appears here. coverageUncovered fires whenever
  * hasReviewPacket is false (every in-scope AC then reads uncovered), so a truly-clean case needs a
  * covering review packet — see the clean cases.

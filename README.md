@@ -35,9 +35,9 @@ shipped-defect reduction (that stays a longitudinal open question; see the spec'
 - **Effective-FP rate** — over the clean (negative-control) cases: any fact surfaced on a
   known-clean change is an effective false positive. Held to a configured **≤10%** ceiling.
 
-## The corpus
+## The fixture set
 
-A seeded synthetic corpus under `cases/`, one directory per case, each with a `case.json`
+A seeded synthetic fixture set under `cases/`, one directory per case, each with a `case.json`
 (the materialization recipe: spec, task packet, optional review packet, base files, change set) and
 an `expected.json` (the exact facts a correct gate must report + the category tag; clean cases
 declare the empty set). The seeded failure patterns are drawn from a documented failure taxonomy —
@@ -56,13 +56,13 @@ than invented ad hoc (each case's `failureModeSource` names its taxonomy tie).
 | `clean-in-scope`        | `clean`              | a correct run (in scope, claimed, packet-covered) → **no fact**  |
 | `clean-covered-packet`  | `clean`              | a correct two-AC run, both covered → **no fact**                 |
 
-The corpus loader asserts every case carries a non-empty category tag and a declared expected-facts
+The fixture set loader asserts every case carries a non-empty category tag and a declared expected-facts
 set (clean cases declare `[]`); a malformed case refuses to load.
 
 ## Running it
 
 ```
-npm run bench           # materialize the corpus, run suspec review --json, print the scored report
+npm run bench           # materialize the fixture set, run suspec review --json, print the scored report
 npm run bench:synthetic # alias
 npm run bench:wild      # the WILD tier — real suspec-cli commits, RAW facts, no pass/fail (see wild/README.md)
 node src/runner.mjs --observe   # print each case's raw surfaced facts (no pass/fail) — for grounding
@@ -101,7 +101,7 @@ shipped-defect claim.
 
 ## Gate behavior worth knowing (the gate is the oracle)
 
-These are real behaviors of `suspec review` that the corpus was grounded against, not bugs:
+These are real behaviors of `suspec review` that the fixture set was grounded against, not bugs:
 
 - **`coverageUncovered` fires on every packet-less run.** With no review packet, `hasReviewPacket` is
   `false` and _every_ in-scope AC reads `uncovered` (C012). So a clean change that simply hasn't had
@@ -125,10 +125,10 @@ These are real behaviors of `suspec review` that the corpus was grounded against
 
 ## Bias scope (AC-005)
 
-The corpus was hand-built by the same project that built the gate, and the cases are synthetic — this
-is **self-measurement** at the corpus tier, the same caveat `FINDING-review-gate-measurement` records.
+The fixture set was hand-built by the same project that built the gate, and the cases are synthetic — this
+is **self-measurement** at the fixture set tier, the same caveat `FINDING-review-gate-measurement` records.
 What the numbers establish: the gate mechanically surfaces each seeded fact class and stays silent on
-correct runs, on this corpus. What they do **not** establish: real-world recall on agent-authored
+correct runs, on this fixture set. What they do **not** establish: real-world recall on agent-authored
 changes (a less-biased "wild" set is the next data point, AC-003), or any team-level outcome. The
 effective-FP proxy here is the clean-case rate — a sampled human pass over a wild set is the
 complementary measure the spec's open question names.
@@ -145,7 +145,7 @@ run `npm run bench:wild`.
 ```
 cases/<name>/case.json       the materialization recipe (spec, task, optional packet, files, change set)
 cases/<name>/expected.json   the declared expected facts + category tag (clean cases declare [])
-src/corpus.mjs               loads + validates the corpus (AC-001 assertions)
+src/cases.mjs               loads + validates the fixture set (AC-001 assertions)
 src/materialize.mjs          materializes one case + runs suspec review --json (never imports Core)
 src/score.mjs                recall per category/overall + effective-FP scoring + report rendering
 src/runner.mjs               the synthetic runner (AC-002): hit/miss/extra, exits non-zero on a miss

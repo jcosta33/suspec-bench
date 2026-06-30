@@ -1,20 +1,20 @@
 #!/usr/bin/env node
-// The synthetic runner (AC-002). Loads the seeded corpus, materializes each case as a throwaway git
+// The synthetic runner (AC-002). Loads the seeded fixture set, materializes each case as a throwaway git
 // workspace, runs it through the PUBLIC `suspec review --json` contract, and records per case the
 // surfaced facts vs the declared expected facts (hit / miss / extra). Exits non-zero on any miss
 // (AC-002) or when the effective-FP rate exceeds the ceiling (AC-004).
 //
 // Usage:
-//   node src/runner.mjs               run the corpus, print the scored report, exit per AC-002/004
+//   node src/runner.mjs               run the fixture set, print the scored report, exit per AC-002/004
 //   node src/runner.mjs --observe     print each case's raw normalized facts (no pass/fail) — for
 //                                     grounding expected.json against the gate (the gate is the oracle)
 //   node src/runner.mjs --json        emit the machine-readable scored result as JSON
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { loadCorpus } from "./corpus.mjs";
+import { loadCases } from "./cases.mjs";
 import { materializeAndReview } from "./materialize.mjs";
 import { score, renderReport, DEFAULT_FP_CEILING } from "./score.mjs";
 
@@ -27,8 +27,25 @@ function resolveSuspecBin() {
   const rel = pkg.suspecBench?.suspecBin ?? "../suspec-cli/bin/suspec.js";
   const configured = resolve(ROOT, rel);
   if (existsSync(configured)) return configured;
-  const localCheckout = resolve(ROOT, "../corpus-cli/bin/suspec.js");
-  return existsSync(localCheckout) ? localCheckout : configured;
+  const sibling = findSiblingSuspecBin();
+  return sibling ?? configured;
+}
+
+function findSiblingSuspecBin() {
+  const parent = resolve(ROOT, "..");
+  for (const name of readdirSync(parent)) {
+    const candidateRoot = join(parent, name);
+    const candidateBin = join(candidateRoot, "bin", "suspec.js");
+    const candidatePackage = join(candidateRoot, "package.json");
+    if (!existsSync(candidateBin) || !existsSync(candidatePackage)) continue;
+    try {
+      const pkg = JSON.parse(readFileSync(candidatePackage, "utf8"));
+      if (pkg.name === "suspec-cli") return candidateBin;
+    } catch {
+      // Ignore non-package sibling directories.
+    }
+  }
+  return null;
 }
 
 function resolveCeiling() {
@@ -58,9 +75,9 @@ function main() {
 
   let cases;
   try {
-    cases = loadCorpus();
+    cases = loadCases();
   } catch (e) {
-    console.error(`corpus failed to load (AC-001): ${e.message}`);
+    console.error(`case set failed to load (AC-001): ${e.message}`);
     process.exit(2);
   }
 

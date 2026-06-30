@@ -1,7 +1,7 @@
 # suspec-bench — the WILD tier
 
 The **wild tier** (SPEC-review-gate-benchmark **AC-003**) is the less-biased complement to the
-synthetic corpus. Where the synthetic tier seeds _known_ faults and scores recall against
+synthetic fixture set. Where the synthetic tier seeds _known_ faults and scores recall against
 _declared expected facts_, the wild tier runs **real agent-authored suspec-cli changes** — actual
 commits from the recent suspec-cli remediation — through the same public `suspec review --json`
 contract and **records the raw facts the gate surfaces, with no expected facts and no pass/fail.**

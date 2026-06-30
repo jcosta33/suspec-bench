@@ -1,6 +1,6 @@
-// The corpus loader (AC-001). Loads every cases/<name>/{case.json, expected.json} and ASSERTS each
+// The fixture set loader (AC-001). Loads every cases/<name>/{case.json, expected.json} and ASSERTS each
 // case carries a non-empty category tag and a declared expected-facts set (clean cases declare the
-// empty set []). A case that violates the contract throws — the corpus refuses to load.
+// empty set []). A case that violates the contract throws — the fixture set refuses to load.
 
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -14,20 +14,20 @@ function readJson(path) {
 }
 
 /**
- * Load and validate the corpus. Returns an array of cases, each:
+ * Load and validate the fixture set. Returns an array of cases, each:
  *   { name, dir, category, failureModeSource, slug, taskStem, spec, task, reviewPacket?,
  *     baseFiles, changeSet, expectedFacts: string[], targetFacts: string[] }
  * Throws if any case is malformed (the AC-001 loader assertion).
  */
-export function loadCorpus(casesDir = CASES_DIR) {
+export function loadCases(casesDir = CASES_DIR) {
     if (!existsSync(casesDir)) {
-        throw new Error(`corpus directory not found: ${casesDir}`);
+        throw new Error(`cases directory not found: ${casesDir}`);
     }
     const names = readdirSync(casesDir)
         .filter((n) => statSync(join(casesDir, n)).isDirectory())
         .sort();
     if (names.length === 0) {
-        throw new Error(`corpus is empty: no case directories under ${casesDir}`);
+        throw new Error(`case set is empty: no case directories under ${casesDir}`);
     }
 
     const cases = [];
